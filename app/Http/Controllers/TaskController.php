@@ -75,8 +75,8 @@ class TaskController extends Controller
         $task=$request->name;
         $dateFrom=$request->dateFrom;
         $dateTo=$request->dateTo;
-        //dd($request->dateFrom." ".$dateTo);
-        return view('tasks.buscarTasks', [
+        //dd($task." ".$dateFrom." ".$dateTo);
+        return view('tasks.buscarTareas', [
             'tasks' => $this->tasks->searchTasks($task,$dateFrom,$dateTo),
         ]);
     }

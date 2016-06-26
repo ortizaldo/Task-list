@@ -101,7 +101,6 @@ $( document ).ready(function() {
         });
     });
     $('#resTodoTasks').on('click', '.parar', function(e) {
-        console.log('.parar', this);
         e.preventDefault();
         clearInterval(tiempo_corriendo);
         var row=$(this).parents("tr");
@@ -124,6 +123,26 @@ $( document ).ready(function() {
             dataType: 'json',
             success: function (data) {
                 $("tr[data-id="+data.id+"] div[data-name='duration_task']").html(data.duration_task);
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    });
+    $('#buscarTareas').click(function(e) {
+        e.preventDefault();
+        var form=$("#formBuscarTareas");
+        var url=form[0].action;
+        var dataForm=form.serialize();
+        var type = "POST";
+        //console.log('datos a mandar', form+' '+url+' '+dataForm+' '+type);
+        $.ajax({
+            type: type,
+            url: url,
+            data: dataForm,
+            success: function (data) {
+                //console.log('success:', data);
+                $("#resFormBusc").html(data);
             },
             error: function (data) {
                 console.log('Error:', data);

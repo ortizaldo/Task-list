@@ -48,13 +48,13 @@ class TaskRepository
     public function searchTasks($task,$dateFrom,$dateTo)
     {
         if($task != ""){
-            return Task::where('name', 'LIKE', "%$task->name%")
-                    ->whereBetween('created_at', array($dateFrom, $dateTo))
-                    ->orderBy('fecha_fin', 'asc')
+            return Task::where('name', 'LIKE', "%$task%")
+                    /*->whereBetween('created_at', array($dateFrom, $dateTo))
+                    ->orderBy('fecha_fin', 'asc')*/
                     ->get(); 
         }else{
-            return Task::whereBetween('created_at', array($dateFrom, $dateTo))
-                    ->orderBy('fecha_fin', 'asc')
+            return Task::where('end_tasks', 1)
+                    ->orderBy('created_at', 'desc')
                     ->get();
         }
     }

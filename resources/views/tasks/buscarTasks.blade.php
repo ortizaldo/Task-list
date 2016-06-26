@@ -13,7 +13,7 @@
                     @include('common.errors')
 
                     <!-- New Task Form -->
-                    <form action="{{ url('/tasks/buscarTasks') }}" method="POST" class="form-horizontal">
+                    <form id="formBuscarTareas" action="{{ url('/tasks/buscarTasks') }}" method="POST" class="form-horizontal">
                         {{ csrf_field() }}
 
                         <!-- Task Name -->
@@ -50,7 +50,7 @@
                         <!-- Add Task Button -->
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-6">
-                                <button type="submit" class="btn btn-default">
+                                <button id="buscarTareas" type="button" class="btn btn-default">
                                     <i class="fa fa-search"></i>Buscar Tareas
                                 </button>
                             </div>
@@ -70,6 +70,8 @@
                         </a>
                       </li>
                     </ul>
+                </div>
+                <div id="resFormBusc">
                 </div>
             </div>
         </div>
