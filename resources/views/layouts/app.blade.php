@@ -10,6 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset('app/app.js') }}"></script>
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
@@ -23,9 +24,9 @@
         }
         .reloj{
           float: left;
-          font-size: 15px;
-          font-family: Courier,sans-serif;
-          color: #363431;
+          font-size: 20px;
+          font-family: Lato;
+          color: #1C064E;
         }
     </style>
 </head>
@@ -44,7 +45,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Task List
+                    Tareas
                 </a>
             </div>
 
@@ -57,15 +58,15 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">Inicio de sesion</a></li>
+                        <li><a href="{{ url('/register') }}">Registro</a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Salir</a></li>
                                 <li><a href="{{ url('/tasks/buscarTasks') }}"><i class="fa fa-search" aria-hidden="true"></i>Busqueda de Tareas</a></li>
                             </ul>
                         </li>
@@ -82,7 +83,6 @@
     <script type="text/javascript" src="{{ asset('bootstrap/transition.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bootstrap/collapse.js') }}"></script>
     <script type="text/javascript" src="{{ asset('moment/moment.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('app/app.js') }}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel='stylesheet' type='text/css'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

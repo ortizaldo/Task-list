@@ -43,18 +43,42 @@ class TaskController extends Controller
     public function getTasks($user)
     {
         //echo 'algo '.$this->tasks->endTasksForUser($user);
+        //dd($user);
         return view('tasks.historyTasks', [
             'tasks' => $this->tasks->endTasksForUser($user),
         ]);
     }
-    
-    public function buscarTasks()
+    public function getTasksCurrent($user)
     {
         //echo 'algo '.$this->tasks->endTasksForUser($user);
-        /*return view('tasks.historyTasks', [
-            'tasks' => $this->tasks->endTasksForUser($user),
-        ]);*/
+        //dd($user);
+        return view('tasks.inProgressTasks', [
+            'tasks' => $this->tasks->tasksCurrent($user),
+        ]);
+    }
+    public function getTasksToDo($user, $task)
+    {
+        //echo 'algo '.$this->tasks->endTasksForUser($user);
+        //dd($user);
+        return view('tasks.inProgressTasks', [
+            'tasks' => $this->tasks->tasksToDo($user, $task),
+        ]);
+    }
+  
+    public function buscarTasks()
+    {
         return view('tasks.buscarTasks');
+    }
+    public function buscarTareas(Request $request)
+    {
+        // Create The Task...
+        $task=$request->name;
+        $dateFrom=$request->dateFrom;
+        $dateTo=$request->dateTo;
+        //dd($request->dateFrom." ".$dateTo);
+        return view('tasks.buscarTasks', [
+            'tasks' => $this->tasks->searchTasks($task,$dateFrom,$dateTo),
+        ]);
     }
   
     public function store(Request $request)
@@ -69,6 +93,7 @@ class TaskController extends Controller
             'name' => $request->name,
             'descripcion' => $request->descripcion,
             'end_tasks' => $request->end_tasks,
+            'fecha_inicio' => $request->fecha_inicio,
         ]);
         return redirect('/tasks');
     }
@@ -81,9 +106,23 @@ class TaskController extends Controller
         $task::find($task->id);
         $task->duration_task = $request->duration_task;
         $task->end_tasks = $request->end_tasks;
-        $task->date_end = date("Y-m-d H:i:s");
+        $task->fecha_fin = date("Y-m-d");
         $task->save();
         return redirect('/tasks');
+    }
+  
+    public function updateTime(Request $request, Task $task)
+    {
+        // Update The Task...
+        //return $task;
+        //dd($request);
+        
+        $this->authorize('update', $task);
+        $task::find($task->id);
+        $task->duration_task = $request->update_time;
+        $task->save();
+        return $task;
+        //return redirect('/tasks');
     }
     
     public function destroy(Request $request, Task $task)

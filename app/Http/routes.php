@@ -26,8 +26,12 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/tasks', 'TaskController@index');
     Route::get('/tasks/buscarTasks', 'TaskController@buscarTasks');
     Route::get('/tasks/{user}', 'TaskController@getTasks');
+    Route::get('/tasks/tasksTodoAll/{user}', 'TaskController@getTasksCurrent');
+    Route::get('/tasks/tasksTodo/{user}/{task}', 'TaskController@getTasksToDo');
     Route::post('/task', 'TaskController@store');
+    Route::post('/tasks/buscarTasks', 'TaskController@buscarTareas');
     Route::put('/task/{task}', 'TaskController@update');
+    Route::put('/task/pausarTiempo/{task}', 'TaskController@updateTime');
     Route::delete('/task/{task}', 'TaskController@destroy');
     //Route::update('/task/{task}/{duracion}', 'TaskController@updateDuration');
     Route::get('refresh-csrf', function(){

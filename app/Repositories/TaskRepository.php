@@ -17,7 +17,23 @@ class TaskRepository
     {
         return Task::where('user_id', $user->id)
                     ->where('end_tasks', 0)
-                    ->orderBy('created_at', 'asc')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+    }
+    public function tasksCurrent($user)
+    {
+        return Task::where('user_id', $user)
+                    ->where('end_tasks', 0)
+                    ->where('duration_task', '>=', '00:00:00')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+    }
+    public function tasksToDo($user, $task)
+    {
+        return Task::where('user_id', $user)
+                    ->where('id', $task)
+                    ->where('end_tasks', 0)
+                    ->orderBy('created_at', 'desc')
                     ->get();
     }
   
@@ -25,7 +41,21 @@ class TaskRepository
     {
         return Task::where('user_id', $user)
                     ->where('end_tasks', 1)
-                    ->orderBy('date_end', 'asc')
+                    //->where('fecha_inicio', date('Y-m-d'))
+                    ->orderBy('fecha_fin', 'asc')
                     ->get();
+    }
+    public function searchTasks($task,$dateFrom,$dateTo)
+    {
+        if($task != ""){
+            return Task::where('name', 'LIKE', "%$task->name%")
+                    ->whereBetween('created_at', array($dateFrom, $dateTo))
+                    ->orderBy('fecha_fin', 'asc')
+                    ->get(); 
+        }else{
+            return Task::whereBetween('created_at', array($dateFrom, $dateTo))
+                    ->orderBy('fecha_fin', 'asc')
+                    ->get();
+        }
     }
 }
