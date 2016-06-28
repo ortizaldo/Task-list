@@ -50,6 +50,7 @@
                         <!-- Add Task Button -->
                         <div class="form-group">
                             <div class="col-md-offset-3 col-md-6">
+                                <input name="userID" type='hidden' value="{{ Auth::user()->id }}" />
                                 <button id="buscarTareas" type="button" class="btn btn-default">
                                     <i class="fa fa-search"></i>Buscar Tareas
                                 </button>

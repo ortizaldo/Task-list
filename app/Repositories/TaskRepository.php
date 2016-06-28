@@ -41,19 +41,31 @@ class TaskRepository
     {
         return Task::where('user_id', $user)
                     ->where('end_tasks', 1)
-                    //->where('fecha_inicio', date('Y-m-d'))
+                    ->where('fecha_inicio', date('Y-m-d'))
                     ->orderBy('fecha_fin', 'asc')
                     ->get();
     }
-    public function searchTasks($task,$dateFrom,$dateTo)
+    public function searchTasks($userID,$task,$dateFrom,$dateTo)
     {
-        if($task != ""){
+        if($task != "" && $dateFrom == "" && $dateTo == ""){
             return Task::where('name', 'LIKE', "%$task%")
-                    /*->whereBetween('created_at', array($dateFrom, $dateTo))
-                    ->orderBy('fecha_fin', 'asc')*/
+                    ->where('user_id', $userID)
+                    ->orderBy('fecha_fin', 'asc')
+                    ->get(); 
+        }elseif($task != "" && $dateFrom != "" && $dateTo != ""){
+            return Task::where('name', 'LIKE', "%$task%")
+                    ->where('user_id', $userID)
+                    ->whereBetween('fecha_inicio', array($dateFrom, $dateTo))
+                    ->orderBy('fecha_fin', 'asc')
+                    ->get(); 
+        }elseif($task == "" && $dateFrom != "" && $dateTo != ""){
+            return Task::where('user_id', $userID)
+                    ->whereBetween('fecha_inicio', array($dateFrom, $dateTo))
+                    ->orderBy('fecha_fin', 'asc')
                     ->get(); 
         }else{
             return Task::where('end_tasks', 1)
+                    ->where('user_id', $userID)
                     ->orderBy('created_at', 'desc')
                     ->get();
         }

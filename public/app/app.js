@@ -78,17 +78,18 @@ $( document ).ready(function() {
         e.preventDefault();
         var row=$(this).parents("tr");
         var idTask=row.data('id');
-        var duracion=$('tr[data-id='+idTask+'] div[data-name="duration_task"]').text();
-        duracion=duracion.split(':');
-        tiempo.hora=parseInt(duracion[0],10);
-        tiempo.minuto=parseInt(duracion[1],10);
-        tiempo.segundo=parseInt(duracion[2],10);
-        $("#Horas").text(tiempo.hora < 10 ? '0' + tiempo.hora : tiempo.hora);
-        $("#Minutos").text(tiempo.minuto < 10 ? '0' + tiempo.minuto : tiempo.minuto);
-        $("#Segundos").text(tiempo.segundo < 10 ? '0' + tiempo.segundo : tiempo.segundo);
         var user=$("#tasksTodo").attr("data-id");
-        var control = cronometro(idTask);
         $.get('/tasks/tasksTodo/'+user+'/'+idTask).done(function(data){
+            console.log('data', data);
+            var duracion=$('tr[data-id='+idTask+'] div[data-name="duration_task"]').text();
+            duracion=duracion.split(':');
+            tiempo.hora=parseInt(duracion[0],10);
+            tiempo.minuto=parseInt(duracion[1],10);
+            tiempo.segundo=parseInt(duracion[2],10);
+            $("#Horas").text(tiempo.hora < 10 ? '0' + tiempo.hora : tiempo.hora);
+            $("#Minutos").text(tiempo.minuto < 10 ? '0' + tiempo.minuto : tiempo.minuto);
+            $("#Segundos").text(tiempo.segundo < 10 ? '0' + tiempo.segundo : tiempo.segundo);
+            var control = cronometro(idTask);
             $('#ToDo').hide();
             $("#resTodoTasks").html(data);
             $("#tabInProgress").addClass('active');

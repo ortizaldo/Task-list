@@ -32,7 +32,7 @@
                     </button>
                 </td>
                 <td>
-                    <form action="{{url('task/' . $task->id)}}" method="POST" onsubmit="reinicio({{$task->id}})">
+                    <form action="{{url('task/' . $task->id)}}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <input type="hidden" id="duration_task-{{$task->id}}" name="duration_task" value=""></input>
