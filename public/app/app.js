@@ -79,8 +79,9 @@ $( document ).ready(function() {
         var row=$(this).parents("tr");
         var idTask=row.data('id');
         var user=$("#tasksTodo").attr("data-id");
+        $('#current').show();
         $.get('/tasks/tasksTodo/'+user+'/'+idTask).done(function(data){
-            console.log('data', data);
+            //console.log('data', data);
             var duracion=$('tr[data-id='+idTask+'] div[data-name="duration_task"]').text();
             duracion=duracion.split(':');
             tiempo.hora=parseInt(duracion[0],10);
@@ -90,13 +91,14 @@ $( document ).ready(function() {
             $("#Minutos").text(tiempo.minuto < 10 ? '0' + tiempo.minuto : tiempo.minuto);
             $("#Segundos").text(tiempo.segundo < 10 ? '0' + tiempo.segundo : tiempo.segundo);
             var control = cronometro(idTask);
+            $('#current').show();
             $('#ToDo').hide();
             $("#resTodoTasks").html(data);
             $("#tabInProgress").addClass('active');
             $("#current").addClass('in');
             $("#current").addClass('active');
             $("#tabToDo").removeClass('active');
-            $("#inicio"+idTask).prop('disabled', true);
+            $(".inicio").prop('disabled', true);
             $("#continuar"+idTask).attr('disabled', 'disabled');
             $("#update_button-"+idTask).prop('disabled', false);
         });
