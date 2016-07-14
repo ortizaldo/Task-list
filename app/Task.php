@@ -23,7 +23,7 @@ class Task extends Model
         'user_id' => 'int',
     ];
     /**
-     * Get the user that owns the task.
+     * Get the user that owns the task. prueba
      */
     public function user()
     {
