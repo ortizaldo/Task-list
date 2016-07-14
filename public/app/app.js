@@ -117,6 +117,7 @@ $( document ).ready(function() {
         var dataForm=form.serialize();
         var type = "PUT";
         var formData = {
+            //TODO - agregarle 0 a la izquierda cuando sean menor a diez
             duration_task: $('#update_task-'+idTask).val(),
         }
         $.ajax({
