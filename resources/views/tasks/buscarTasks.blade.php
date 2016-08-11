@@ -59,8 +59,8 @@
                     </form>
                 </div>
             </div>
-            
-            <!-- Current Tasks -->
+        </div>
+        <div class="col-sm-offset-1 col-lg-10 col-md-11 col-sm-2 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <ul class="nav nav-pills">

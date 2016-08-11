@@ -6,16 +6,12 @@ var tiempo = {
 var tiempo_corriendo = null;
 function cronometro (taskID) {
     tiempo_corriendo = setInterval(function(){
-        // Segundos
         tiempo.segundo++;
-        if(tiempo.segundo >= 60)
-        {
+        if(tiempo.segundo >= 60){
             tiempo.segundo = 0;
             tiempo.minuto++;
         }
-        // Minutos
-        if(tiempo.minuto >= 60)
-        {
+        if(tiempo.minuto >= 60){
             tiempo.minuto = 0;
             tiempo.hora++;
         }
@@ -29,7 +25,6 @@ function cronometro (taskID) {
 }
 $( document ).ready(function() {
     $('#task-fecha_inicio').val(moment().format("YYYY-MM-DD"));
-    //timepickers
     $('#dateFrom').datetimepicker({
         format:"YYYY-MM-DD",
     });
@@ -81,7 +76,6 @@ $( document ).ready(function() {
         var user=$("#tasksTodo").attr("data-id");
         $('#current').show();
         $.get('/tasks/tasksTodo/'+user+'/'+idTask).done(function(data){
-            //console.log('data', data);
             var duracion=$('tr[data-id='+idTask+'] div[data-name="duration_task"]').text();
             duracion=duracion.split(':');
             tiempo.hora=parseInt(duracion[0],10);
@@ -117,7 +111,6 @@ $( document ).ready(function() {
         var dataForm=form.serialize();
         var type = "PUT";
         var formData = {
-            //TODO - agregarle 0 a la izquierda cuando sean menor a diez
             duration_task: $('#update_task-'+idTask).val(),
         }
         $.ajax({
@@ -139,13 +132,11 @@ $( document ).ready(function() {
         var url=form[0].action;
         var dataForm=form.serialize();
         var type = "POST";
-        //console.log('datos a mandar', form+' '+url+' '+dataForm+' '+type);
         $.ajax({
             type: type,
             url: url,
             data: dataForm,
             success: function (data) {
-                //console.log('success:', data);
                 $("#resFormBusc").html(data);
             },
             error: function (data) {
