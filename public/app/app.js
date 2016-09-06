@@ -127,6 +127,7 @@ $( document ).ready(function() {
         });
     });
     $('#buscarTareas').click(function(e) {
+        console.log('e', e);
         e.preventDefault();
         var form=$("#formBuscarTareas");
         var url=form[0].action;
@@ -151,5 +152,24 @@ $( document ).ready(function() {
         $("#continuar"+idTask).prop('disabled', true);
         $("#update_button-"+idTask).prop('disabled', false);
         var control = cronometro(idTask);
+    });
+    $(function() {
+        $('body').on('click', '.pagination a', function(e) { 
+            e.preventDefault(); 
+            var url = $(this).attr('href');  
+            var page_number = $(this).attr('href').split('page=')[1];  
+            getArticles(page_number);
+            window.history.pushState("", "", url); // to keep (show) pagination URLs in the address bar so that users can bookmark or share links... 
+        });
+        function getArticles(page_number) {
+            $.ajax({
+                url : '?page=' + page_number  
+            }).done(function (data) {
+                //$('.tasks').empty()
+                $('.tasks').html(data);
+            }).fail(function () {
+                alert('Articles could not be loaded.');
+            });
+        }
     });
 });

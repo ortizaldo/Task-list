@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\User;
 use App\Task;
+use DB;
 
 class TaskRepository
 {
@@ -43,6 +44,7 @@ class TaskRepository
                     ->where('end_tasks', 1)
                     ->where('fecha_inicio', date('Y-m-d'))
                     ->orderBy('fecha_fin', 'asc')
+                    ->paginate(15)
                     ->get();
     }
     public function searchTasks($userID,$task,$dateFrom,$dateTo)
@@ -51,23 +53,30 @@ class TaskRepository
             return Task::where('name', 'LIKE', "%$task%")
                     ->where('user_id', $userID)
                     ->orderBy('fecha_fin', 'asc')
-                    ->get(); 
+                    ->paginate(10);
         }elseif($task != "" && $dateFrom != "" && $dateTo != ""){
             return Task::where('name', 'LIKE', "%$task%")
                     ->where('user_id', $userID)
                     ->whereBetween('fecha_inicio', array($dateFrom, $dateTo))
                     ->orderBy('fecha_fin', 'asc')
-                    ->get(); 
+                    ->paginate(10);
         }elseif($task == "" && $dateFrom != "" && $dateTo != ""){
             return Task::where('user_id', $userID)
                     ->whereBetween('fecha_inicio', array($dateFrom, $dateTo))
                     ->orderBy('fecha_fin', 'asc')
-                    ->get(); 
+                    ->paginate(10);
         }else{
             return Task::where('end_tasks', 1)
                     ->where('user_id', $userID)
                     ->orderBy('created_at', 'desc')
-                    ->get();
+                    ->paginate(10);
+                    //->get();
         }
+    }
+    public function searchTasksAll()
+    {
+        return Task::where('end_tasks', 1)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
     }
 }

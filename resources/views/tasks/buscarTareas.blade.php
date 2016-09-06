@@ -1,5 +1,5 @@
 @if (count($tasks) > 0)
-<div class="panel-body">
+<div class="panel-body" id="tasks-container">
   <table class="table table-striped task-table">
     <thead>
       <th>Task</th>
@@ -28,7 +28,9 @@
                 </td>
             </tr>
         @endforeach
+        {{ $tasks->links() }}
     </tbody>
+    
   </table>
 </div>
 @endif

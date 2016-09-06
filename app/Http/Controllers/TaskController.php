@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Task;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -65,9 +66,18 @@ class TaskController extends Controller
         ]);
     }
   
-    public function buscarTasks()
+    public function buscarTasks(Request $request)
     {
-        return view('tasks.buscarTasks');
+        $tareas=$this->tasks->searchTasksAll();
+        if ($request->ajax()) {  // If it's AJAX request, then:
+            //dd($tareas);
+            return view('tasks.buscarTareas', ['tasks' => $tareas])->render();  // render view and send it back as a raw HTML response
+            /*return response()->json([
+                'tasks' => $tareas,
+            ]);*/
+        }
+        // If it is not AJAX request, then:
+        return view('tasks.buscarTasks', ['tasks' => $tareas]);
     }
     public function buscarTareas(Request $request)
     {
@@ -77,10 +87,51 @@ class TaskController extends Controller
         $dateTo=$request->dateTo;
         $userID=$request->userID;
         //dd($request);
+        $tareas=$this->tasks->searchTasks($userID,$task,$dateFrom,$dateTo);
+        if ($request->ajax()){
+            /*return response()->json(
+                                     view('tasks.buscarTareas', [
+                                             'tasks' => $tareas
+                                          ])->render());*/
+            return view('tasks.buscarTareas', [
+                                             'tasks' => $tareas
+                                          ]);
+        }
         return view('tasks.buscarTareas', [
-            'tasks' => $this->tasks->searchTasks($userID,$task,$dateFrom,$dateTo),
+          'tasks' => $tareas,
         ]);
+        
+        /*return view('tasks.buscarTareas', [
+            'tasks' => $tareas,
+        ]);*/
     }
+    
+    public function ajaxPagination(Request $request)
+      {
+          // Create The Task...
+          $task=$request->name;
+          $dateFrom=$request->dateFrom;
+          $dateTo=$request->dateTo;
+          $userID=$request->userID;
+          $tareas=$this->tasks->searchTasks($userID,$task,$dateFrom,$dateTo);
+          dd($tareas);
+          if ($request->ajax()){
+              return $tareas;/*->json(/*
+                                       view('tasks.presult', [
+                                               'tasks' => $tareas
+                                            ])->render());*/
+              /*return view('tasks.presult', compact([
+                                               'tasks' => $tareas
+                                            ]));*/
+          }
+          return view('tasks.buscarTareas', [
+            'tasks' => $tareas,
+          ]);
+
+          /*return view('tasks.buscarTareas', [
+              'tasks' => $tareas,
+          ]);*/
+      }
   
     public function store(Request $request)
     {
