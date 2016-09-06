@@ -30,9 +30,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/tasks/tasksTodo/{user}/{task}', 'TaskController@getTasksToDo');
     Route::post('/task', 'TaskController@store');
     Route::post('/tasks/buscarTasks', 'TaskController@buscarTareas');
+    Route::get('/tasks/ajax-pagination','TaskController@ajaxPagination');
     Route::put('/task/{task}', 'TaskController@update');
     Route::put('/task/pausarTiempo/{task}', 'TaskController@updateTime');
     Route::delete('/task/{task}', 'TaskController@destroy');
+    Route::resource('tasks', 'TaskController');
     //Route::update('/task/{task}/{duracion}', 'TaskController@updateDuration');
     Route::get('refresh-csrf', function(){
         return csrf_token();
