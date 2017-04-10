@@ -25,7 +25,7 @@ Route::group(['middleware' => ['web']], function () {
     })->middleware('guest');
     Route::get('/tasks', 'TaskController@index');
     Route::get('/tasks/buscarTasks', 'TaskController@buscarTasks');
-    Route::get('/tasks/{user}', 'TaskController@getTasks');
+    Route::get('/tasks/tasksHistory/{user}', 'TaskController@getTasks');
     Route::get('/tasks/tasksTodoAll/{user}', 'TaskController@getTasksCurrent');
     Route::get('/tasks/tasksTodo/{user}/{task}', 'TaskController@getTasksToDo');
     Route::post('/task', 'TaskController@store');

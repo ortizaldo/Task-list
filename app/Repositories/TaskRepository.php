@@ -44,7 +44,6 @@ class TaskRepository
                     ->where('end_tasks', 1)
                     ->where('fecha_inicio', date('Y-m-d'))
                     ->orderBy('fecha_fin', 'asc')
-                    ->paginate(15)
                     ->get();
     }
     public function searchTasks($userID,$task,$dateFrom,$dateTo)

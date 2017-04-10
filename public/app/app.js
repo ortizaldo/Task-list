@@ -65,17 +65,22 @@ $( document ).ready(function() {
         $('#current').hide();
         console.log('historyTasks');
         var user=$("#historyTasks").attr("data-id");
-        $.get('/tasks/'+user).done(function(data){
+        console.log('user', user);
+        $.get('tasks/tasksHistory/'+user).done(function(data){
             $("#history").html(data);
         });
     })
     $(".inicio").click(function(e) {
         e.preventDefault();
+        console.log('e', e);
         var row=$(this).parents("tr");
         var idTask=row.data('id');
         var user=$("#tasksTodo").attr("data-id");
         $('#current').show();
-        $.get('/tasks/tasksTodo/'+user+'/'+idTask).done(function(data){
+        console.log('entre');
+        var urlGet='tasks/tasksTodo/'+user+'/'+idTask;
+        console.log('entre', urlGet);
+        $.get(urlGet).done(function(data){
             var duracion=$('tr[data-id='+idTask+'] div[data-name="duration_task"]').text();
             duracion=duracion.split(':');
             tiempo.hora=parseInt(duracion[0],10);
